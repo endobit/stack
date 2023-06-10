@@ -1,0 +1,49 @@
+syntax = "proto3";
+package stack.v1;
+
+option go_package = "github.com/endobit/stack.git/gen/go/proto/stack/v1;stackv1";
+
+service StackService {
+  rpc ListZones(ListZonesRequest) returns (stream ListZonesResponse) {}
+  rpc ListClusters(ListClustersRequest) returns (stream ListClustersResponse) {}
+  rpc ListHosts(ListHostsRequest) returns (stream ListHostsResponse) {}
+}
+
+message ListZonesRequest {
+  string zone_glob = 1;
+}
+
+message ListZonesResponse {
+  int64 id = 1;
+  string name = 2;
+  string time_zone = 3;
+}
+
+message ListClustersRequest {
+  string zone_glob = 1;
+  string cluster_glob = 2;
+}
+
+message ListClustersResponse {
+  int64 id = 1;
+  string name = 2;
+  string zone = 3;
+}
+
+message ListHostsRequest {
+  string zone_glob = 1;
+  string cluster_glob = 2;
+}
+
+message ListHostsResponse {
+  int64 id = 1;
+  string name = 2;
+  string zone = 3;
+  optional string cluster = 4;
+  optional string appliance = 5;
+  optional string model = 6;
+  optional string environment = 7;
+  optional string rack = 8;
+  optional int32 rank = 9;
+  optional string type = 10;
+}
