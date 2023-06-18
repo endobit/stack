@@ -18,7 +18,7 @@ VALUES
 	(select id FROM appliances a where a.appliance = ?),
 	(select id FROM models m where m.model = ?),
 	(select id FROM environments e where e.environment = ?))
-RETURNING id, device, cluster_id, appliance_id, model_id, environment_id
+RETURNING id, device, zone_id, cluster_id, appliance_id, model_id, environment_id
 `
 
 type CreateDeviceParams struct {
@@ -41,6 +41,7 @@ func (q *Queries) CreateDevice(ctx context.Context, arg CreateDeviceParams) (Dev
 	err := row.Scan(
 		&i.ID,
 		&i.Device,
+		&i.ZoneID,
 		&i.ClusterID,
 		&i.ApplianceID,
 		&i.ModelID,
@@ -147,7 +148,7 @@ SET
        environment_id = (select id FROM environments e where e.environment = ?)
 WHERE
        devices.id = ?
-RETURNING id, device, cluster_id, appliance_id, model_id, environment_id
+RETURNING id, device, zone_id, cluster_id, appliance_id, model_id, environment_id
 `
 
 type UpdateDeviceParams struct {
@@ -172,6 +173,7 @@ func (q *Queries) UpdateDevice(ctx context.Context, arg UpdateDeviceParams) (Dev
 	err := row.Scan(
 		&i.ID,
 		&i.Device,
+		&i.ZoneID,
 		&i.ClusterID,
 		&i.ApplianceID,
 		&i.ModelID,

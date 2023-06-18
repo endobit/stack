@@ -126,6 +126,7 @@ CREATE TABLE IF NOT EXISTS cluster_networks (
 CREATE TABLE IF NOT EXISTS devices (
        id            	   INTEGER PRIMARY KEY,
        device 	    	   TEXT    NOT NULL,
+       zone_id	   	   INTEGER,
        cluster_id	   INTEGER,
        appliance_id	   INTEGER,
        model_id		   INTEGER,

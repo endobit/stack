@@ -35,6 +35,7 @@ type ClusterNetwork struct {
 type Device struct {
 	ID            int64
 	Device        string
+	ZoneID        sql.NullInt64
 	ClusterID     sql.NullInt64
 	ApplianceID   sql.NullInt64
 	ModelID       sql.NullInt64

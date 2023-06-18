@@ -16,6 +16,7 @@ lint::
 
 generate::
 	buf generate
+	go generate ./...
 
 lint::
 	cd proto && buf lint
@@ -30,6 +31,7 @@ format::
 
 build::
 	$(GO_BUILD) ./cmd/stackd
+	$(GO_BUILD) ./cmd/stack
 
 clean::
 	rm -f stackd stack
