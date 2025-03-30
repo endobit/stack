@@ -5,6 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"endobit.io/metal"
 	pb "endobit.io/metal/gen/go/proto/metal/v1"
 	"endobit.io/stack/internal/flags/set"
 	"endobit.io/stack/internal/flags/unset"
@@ -246,13 +247,16 @@ func (h *Host) list(glob string) error {
 			return err
 		}
 
-		var rank, slot string
+		var rank, slot, hostType string
 
 		if resp.HasRank() {
 			rank = strconv.Itoa(int(resp.GetRank()))
 		}
 		if resp.HasSlot() {
 			slot = strconv.Itoa(int(resp.GetSlot()))
+		}
+		if resp.HasType() {
+			hostType = metal.ShortHostType[resp.GetType().String()]
 		}
 
 		_ = t.Write(row{
@@ -267,7 +271,7 @@ func (h *Host) list(glob string) error {
 			Rack:        resp.GetRack(),
 			Rank:        rank,
 			Slot:        slot,
-			Type:        pb.HostType_name[int32(resp.GetType())],
+			Type:        hostType,
 		})
 	}
 
