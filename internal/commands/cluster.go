@@ -69,7 +69,7 @@ func (a *Cluster) List() *cobra.Command {
 		Use:   cluster + " [glob]",
 		Short: "List one or more " + cluster + "s",
 		Args:  cobra.MaximumNArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) error {
+		RunE: func(_ *cobra.Command, args []string) error {
 			var glob string
 
 			if len(args) > 0 {

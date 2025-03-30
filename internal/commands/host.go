@@ -104,7 +104,7 @@ func (h *Host) Set() *cobra.Command {
 
 func (h *Host) Unset() *cobra.Command {
 	var (
-		make        unset.Make
+		vendor      unset.Make
 		model       unset.Model
 		environment unset.Environment
 		appliance   unset.Appliance
@@ -119,10 +119,10 @@ func (h *Host) Unset() *cobra.Command {
 		Use:   host + " name",
 		Short: "Unset a " + host + "'s properties",
 		Args:  cobra.ExactArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) error {
+		RunE: func(_ *cobra.Command, args []string) error {
 			var m *bool
 
-			if make.Val() || model.Val() {
+			if vendor.Val() || model.Val() {
 				m = Ptr(true) // make/model are set together, so unset together
 			}
 
@@ -153,7 +153,7 @@ func (h *Host) Unset() *cobra.Command {
 	h.zone.Add(cmd.Flags(), host, true)
 	h.cluster.Add(cmd.Flags(), host, false)
 
-	make.Add(cmd.Flags(), host)
+	vendor.Add(cmd.Flags(), host)
 	model.Add(cmd.Flags(), host)
 	environment.Add(cmd.Flags(), host)
 	appliance.Add(cmd.Flags(), host)

@@ -153,7 +153,7 @@ func (z *Zone) Add(fs *pflag.FlagSet, object string, req bool) {
 	def := os.Getenv("METAL_ZONE")
 	fs.StringVar(&z.value, z.name, def, "zone for the "+object)
 
-	if def == "" {
+	if req && def == "" {
 		must(cobra.MarkFlagRequired(fs, z.name))
 	}
 
