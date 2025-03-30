@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"errors"
+
 	"github.com/spf13/cobra"
 
 	pb "endobit.io/metal/gen/go/proto/metal/v1"
@@ -67,11 +69,14 @@ func (a *Cluster) List() *cobra.Command {
 		Use:   cluster + " [glob]",
 		Short: "List one or more " + cluster + "s",
 		Args:  cobra.MaximumNArgs(1),
-		RunE: func(_ *cobra.Command, args []string) error {
+		RunE: func(cmd *cobra.Command, args []string) error {
 			var glob string
 
 			if len(args) > 0 {
 				glob = args[0]
+				if !a.zone.IsSet() {
+					return errors.New("zone must be specified when using glob pattern")
+				}
 			}
 			return a.list(glob)
 		},
