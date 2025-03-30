@@ -1,6 +1,8 @@
 package set
 
 import (
+	"os"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 
@@ -147,7 +149,14 @@ func (v *Value) Add(fs *pflag.FlagSet, object string) {
 
 func (z *Zone) Add(fs *pflag.FlagSet, object string, req bool) {
 	z.name = flags.Zone
-	addString(fs, &z.value, z.name, "zone for the "+object, req)
+
+	def := os.Getenv("METAL_ZONE")
+	fs.StringVar(&z.value, z.name, def, "zone for the "+object)
+
+	if def == "" {
+		must(cobra.MarkFlagRequired(fs, z.name))
+	}
+
 }
 
 func addString(fs *pflag.FlagSet, store *string, name, usage string, req bool) {
